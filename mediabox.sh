@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# test Check that script was run not as root or with sudo2
+# Check that script was run not as root or with sudo
 if [ "$EUID" -eq 0 ]
   then echo "Please do not run this script as root or using sudo"
   exit
 fi
 
+# set -x
 
 # See if we need to check GIT for updates
 if [ -e .env ]; then
@@ -46,4 +47,15 @@ if [ -e .env ]; then
     check_run mediabox.sh "exec ./mediabox.sh"
 fi
 
+
+# Download & Launch the containers
+echo "The containers will now be pulled and launched"
+echo "This may take a while depending on your download speed"
+read -r -p "Press any key to continue... " -n1 -s
+printf "\\n\\n"
 docker-compose up -d --remove-orphans
+printf "\\n\\n"
+
+#
+# Completion Message
+printf "Setup Complete - Open a browser and go to: \\n\\n"
