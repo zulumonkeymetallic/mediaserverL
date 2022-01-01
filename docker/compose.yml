@@ -1,13 +1,13 @@
 version: "3"
 services:
-  
+
   sonarr:
     image: ghcr.io/linuxserver/sonarr:latest
     container_name: sonarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
-      - PGID=${PGID}      
+      - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ${APPDATA}sonarr:/config
@@ -15,7 +15,7 @@ services:
       - ${DOWNLOAD}
     ports:
       - 8989:8989
-      
+
   radarr:
     image: ghcr.io/linuxserver/radarr:nightly
     container_name: radarr
@@ -30,7 +30,7 @@ services:
       - ${DOWNLOAD}
     ports:
       - 7878:7878
-      
+
   sabnzbd:
     image: ghcr.io/linuxserver/sabnzbd
     container_name: sabnzbd
@@ -44,17 +44,22 @@ services:
       - ${DOWNLOAD}
     ports:
       - 8080:8080
-      
+
   transmission:
     image: ghcr.io/linuxserver/transmission
     container_name: transmission
-    restart: unless-stopped    
+    restart: unless-stopped
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
       - USER={TRANSUSER}
       - PASS={TRANSPASS}
+      - OPENVPN_PROVIDER=PIA
+      - OPENVPN_CONFIG=france,sweden,austria,italy,belgium
+      - OPENVPN_USERNAME=user
+      - OPENVPN_PASSWORD=pass
+      - LOCAL_NETWORK=192.168.0.0/16
     volumes:
       - ${APPDATA}transmission:/config
       - ${DOWNLOAD}
@@ -64,7 +69,7 @@ services:
       - 51413:51413
       - 51413:51413/udp
 
-      
+
   ombi:
     image: ghcr.io/linuxserver/ombi
     container_name: ombi
@@ -77,7 +82,7 @@ services:
       - ${APPDATA}ombi:/config
     ports:
       - 3579:3579
-      
+
   jackett:
     image: linuxserver/jackett
     container_name: jackett
@@ -91,7 +96,7 @@ services:
       - ${APPDATA}jackett:/config
     ports:
       - 9117:9117
-      
+
   tautulli:
     image: ghcr.io/linuxserver/tautulli
     container_name: tautulli
@@ -104,7 +109,7 @@ services:
       - ${APPDATA}tautulli:/config
     ports:
       - 8181:8181
-      
+
   plex:
     image: ghcr.io/linuxserver/plex
     container_name: plex
@@ -122,7 +127,7 @@ services:
       container_name: watchtower
       volumes:
          - /var/run/docker.sock:/var/run/docker.sock
-        
+
   portainer:
     image: portainer/portainer
     container_name: portainer
