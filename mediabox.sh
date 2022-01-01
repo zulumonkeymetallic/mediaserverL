@@ -45,7 +45,7 @@ if [ -e 1.env ]; then
 mv .env 1.env
 fi
 
-# Download & Launch the containers
+# Download & Lalunch the containers
 cd docker
 echo "The containers will now be pulled and launched"
 echo "This may take a while depending on your download speed"
