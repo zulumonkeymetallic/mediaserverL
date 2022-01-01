@@ -39,16 +39,14 @@ if [ -e .env ]; then
     else
         printf "Mediabox Files Update complete.\\n\\nThis script will restart if necessary\\n\\n"
     fi
-    # Rename the .env file so this check fails if mediabox.sh needs to re-launch
-    mv .env 1.env
-    read -r -p "Press any key to continue... " -n1 -s
-    printf "\\n\\n"
-    # Run exec mediabox.sh if mediabox.sh changed
-    check_run mediabox.sh "exec ./mediabox.sh"
 fi
 
+if [ -e 1.env ]; then
+mv .env 1.env
+fi
 
 # Download & Launch the containers
+cd docker
 echo "The containers will now be pulled and launched"
 echo "This may take a while depending on your download speed"
 read -r -p "Press any key to continue... " -n1 -s
